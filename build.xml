@@ -1,0 +1,196 @@
+<!--
+  ~ Copyright (C) 2013 Maurycy Zarzycki
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<project name="Framework 3.0" basedir="." default="releaseFramework">
+    <import file="../Ant/sdkResolve.xml"/>
+
+    <taskdef resource="flexTasks.tasks" classpath="${SDK}/ant/lib/flexTasks.jar" />
+
+    <property name="SRC" location="${basedir}/src/" />
+    <property name="STARLING" location="${basedir}/../Starling/bin" />
+
+    <target name="releaseFramework" depends="rebuildStarling">
+        <build
+            fileName="framework.swc"
+            />
+    </target>
+
+    <target name="rebuildStarling">
+        <resolveSdk46/>
+        <ant antfile="${basedir}/../Starling/build.xml" target="releaseStarling" inheritAll="false"/>
+    </target>
+
+    <macrodef name="build">
+        <attribute name="fileName" />
+
+        <sequential>
+            <resolveSdk46 />
+
+            <exec executable='${SDK}/bin/compc.exe' resolveexecutable="true">
+                <arg value="-compiler.incremental=true" />
+                <arg value="-load-config=${SDK}/frameworks/air-config.xml" />
+                <arg value="-target-player=11.6" />
+                <arg value="-compiler.source-path=${SDK}/frameworks" />
+                <arg value="-output=${basedir}/bin/@{fileName}" />
+                <arg value="-source-path=src"/>
+                <arg value="-include-libraries=src/NewgroundsAPI.swc"/>
+                <arg value="-include-libraries+=${STARLING}" />
+                <arg value="-compiler.warn-no-constructor=false"/>
+                <arg value="-include-classes"/>
+				<arg value="ASSERT"/>
+				<arg value="Main"/>
+				<arg value="com.adobe.images.BitString"/>
+				<arg value="com.adobe.images.JPGEncoder"/>
+				<arg value="com.adobe.images.PNGEncoder"/>
+				<arg value="com.adobe.serialization.json.JSON"/>
+				<arg value="com.adobe.serialization.json.JSONDecoder"/>
+				<arg value="com.adobe.serialization.json.JSONEncoder"/>
+				<arg value="com.adobe.serialization.json.JSONParseError"/>
+				<arg value="com.adobe.serialization.json.JSONToken"/>
+				<arg value="com.adobe.serialization.json.JSONTokenizer"/>
+				<arg value="com.adobe.serialization.json.JSONTokenType"/>
+				<arg value="CPMStar.AdLoader"/>
+				<arg value="mindjolt.MindJoltAPI"/>
+				<arg value="mochi.as3.MochiAd"/>
+				<arg value="mochi.as3.MochiCoins"/>
+				<arg value="mochi.as3.MochiDigits"/>
+				<arg value="mochi.as3.MochiEventDispatcher"/>
+				<arg value="mochi.as3.MochiEvents"/>
+				<arg value="mochi.as3.MochiInventory"/>
+				<arg value="mochi.as3.MochiScores"/>
+				<arg value="mochi.as3.MochiServices"/>
+				<arg value="mochi.as3.MochiSocial"/>
+				<arg value="mochi.as3.MochiUserData"/>
+				<arg value="net.retrocade.collision.CollisionManager"/>
+				<arg value="net.retrocade.collision.CollisionShapeBase"/>
+				<arg value="net.retrocade.collision.CollisionShapeCircle"/>
+				<arg value="net.retrocade.collision.CollisionShapeLine"/>
+				<arg value="net.retrocade.collision.CollisionShapeRectangle"/>
+				<arg value="net.retrocade.collision.CollisionShapeType"/>
+				<arg value="net.retrocade.constants.AlphabetConst"/>
+				<arg value="net.retrocade.constants.KeyConst"/>
+				<arg value="net.retrocade.data.RetrocamelPriorityQueue"/>
+				<arg value="net.retrocade.data.RetrocamelSpatialHash"/>
+				<arg value="net.retrocade.data.RetrocamelTileGrid"/>
+				<arg value="net.retrocade.functions.printf"/>
+				<arg value="net.retrocade.functions.tracef"/>
+				<arg value="net.retrocade.helpers.ColorMatrixFilterHelper"/>
+				<arg value="net.retrocade.helpers.RetrocamelLoader"/>
+				<arg value="net.retrocade.helpers.RetrocamelScrollAssist"/>
+				<arg value="net.retrocade.helpers.RetrocamelUrlLoader"/>
+				<arg value="net.retrocade.net.retrocade.random.IRandomEngine"/>
+				<arg value="net.retrocade.net.retrocade.random.Random"/>
+				<arg value="net.retrocade.net.retrocade.random.RandomEngineKiss"/>
+				<arg value="net.retrocade.net.retrocade.random.RandomEngineLGM1969"/>
+				<arg value="net.retrocade.net.retrocade.random.RandomEngineType"/>
+				<arg value="net.retrocade.retrocade.RetrocadeBottomBar"/>
+				<arg value="net.retrocade.retrocade.rGameViewerBar"/>
+				<arg value="net.retrocade.retrocade.rGameViewerGame"/>
+				<arg value="net.retrocade.retrocade.rGameViewerThumbBoxes"/>
+				<arg value="net.retrocade.retrocade.rGameViewerThumbLoader"/>
+				<arg value="net.retrocade.retrocamel.components.RetrocamelDisplayObject"/>
+				<arg value="net.retrocade.retrocamel.components.RetrocamelStateBase"/>
+				<arg value="net.retrocade.retrocamel.components.RetrocamelUpdatableGroup"/>
+				<arg value="net.retrocade.retrocamel.components.RetrocamelUpdatableObject"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelBitmapManager"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelCore"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelDisplayManager"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelInputManager"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelSoundManager"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelStarlingCore"/>
+				<arg value="net.retrocade.retrocamel.core.RetrocamelWindowsManager"/>
+				<arg value="net.retrocade.retrocamel.core.retrocamel_int"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelBitmap"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelBitmapFont"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelBitmapText"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelButton"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelGrid9"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelSprite"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelTextField"/>
+				<arg value="net.retrocade.retrocamel.display.flash.RetrocamelWindowFlash"/>
+				<arg value="net.retrocade.retrocamel.display.global.RetrocamelCursor"/>
+				<arg value="net.retrocade.retrocamel.display.global.RetrocamelTooltip"/>
+				<arg value="net.retrocade.retrocamel.display.layers.RetrocamelLayer"/>
+				<arg value="net.retrocade.retrocamel.display.layers.RetrocamelLayerFlash"/>
+				<arg value="net.retrocade.retrocamel.display.layers.RetrocamelLayerFlashBlit"/>
+				<arg value="net.retrocade.retrocamel.display.layers.RetrocamelLayerFlashSprite"/>
+				<arg value="net.retrocade.retrocamel.display.layers.RetrocamelLayerStarling"/>
+				<arg value="net.retrocade.retrocamel.display.starling.RetrocamelButtonStarling"/>
+				<arg value="net.retrocade.retrocamel.display.starling.RetrocamelMovieClipStarling"/>
+				<arg value="net.retrocade.retrocamel.display.starling.RetrocamelSpriteStarling"/>
+				<arg value="net.retrocade.retrocamel.display.starling.RetrocamelTextureAtlas"/>
+				<arg value="net.retrocade.retrocamel.display.starling.RetrocamelWindowStarling"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEasings"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectBase"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectCircleMask"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectFadeFlash"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectFadeScreen"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectMove"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectMusicFade"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectParallel"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectQuake"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectSequence"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectSolidScreen"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelEffectWait"/>
+				<arg value="net.retrocade.retrocamel.effects.RetrocamelScreenEffectBase"/>
+				<arg value="net.retrocade.retrocamel.events.RetrocamelEvent"/>
+				<arg value="net.retrocade.retrocamel.global.RetrocamelEventsQueue"/>
+				<arg value="net.retrocade.retrocamel.global.RetrocamelSimpleSave"/>
+				<arg value="net.retrocade.retrocamel.global.RetrocamelThirdPartyApi"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelMake"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelSettings"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelSound"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelSpatialHashElement"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelStarlingRoot"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelUpdatable"/>
+				<arg value="net.retrocade.retrocamel.interfaces.IRetrocamelWindow"/>
+				<arg value="net.retrocade.retrocamel.locale.RetrocamelLocale"/>
+				<arg value="net.retrocade.retrocamel.locale.RetrocamelLocaleParserAbstract"/>
+				<arg value="net.retrocade.retrocamel.locale.RetrocamelLocaleParserJavaProperties"/>
+				<arg value="net.retrocade.retrocamel.locale.RetrocamelLocaleParserRetrocadeProperties"/>
+				<arg value="net.retrocade.retrocamel.locale._"/>
+				<arg value="net.retrocade.retrocamel.locale._n"/>
+				<arg value="net.retrocade.retrocamel.model.RetrocamelMochiSettings"/>
+				<arg value="net.retrocade.retrocamel.particles.RetrocamelParticlesFireworks"/>
+				<arg value="net.retrocade.retrocamel.particles.RetrocamelParticlesPixel"/>
+				<arg value="net.retrocade.retrocamel.sound.RetrocamelSound"/>
+				<arg value="net.retrocade.retrocamel.sound.RetrocamelSoundNull"/>
+				<arg value="net.retrocade.sfxr.SfxrParams"/>
+				<arg value="net.retrocade.sfxr.SfxrSynth"/>
+				<arg value="net.retrocade.storage.IStorageIOHandler"/>
+				<arg value="net.retrocade.storage.Storage"/>
+				<arg value="net.retrocade.storage.StorageIOHandlerToFile"/>
+				<arg value="net.retrocade.storage.StorageIOHandlerToSharedObject"/>
+				<arg value="net.retrocade.utils.UtilsArray"/>
+				<arg value="net.retrocade.utils.UtilsBase64"/>
+				<arg value="net.retrocade.utils.UtilsBitmapData"/>
+				<arg value="net.retrocade.utils.UtilsByteArray"/>
+				<arg value="net.retrocade.utils.UtilsChain"/>
+				<arg value="net.retrocade.utils.UtilsCrypto"/>
+				<arg value="net.retrocade.utils.UtilsDisplay"/>
+				<arg value="net.retrocade.utils.UtilsGraphic"/>
+				<arg value="net.retrocade.utils.UtilsKeyNames"/>
+				<arg value="net.retrocade.utils.UtilsLorem"/>
+				<arg value="net.retrocade.utils.UtilsMd5"/>
+				<arg value="net.retrocade.utils.UtilsNumber"/>
+				<arg value="net.retrocade.utils.UtilsObjects"/>
+				<arg value="net.retrocade.utils.UtilsOgmo"/>
+				<arg value="net.retrocade.utils.UtilsSecure"/>
+				<arg value="net.retrocade.utils.UtilsString"/>
+				<arg value="net.retrocade.vault.Safe"/>
+				<arg value="net.retrocade.vault.Safe0"/>
+				<arg value="net.retrocade.vault.Safe1"/>
+				<arg value="net.retrocade.vault.Safe2"/>
+				<arg value="net.retrocade.vault.SafeParent"/>
+				<arg value="net.retrocade.vault.Vault"/>
+            </exec>
+        </sequential>
+    </macrodef>
+</project>
